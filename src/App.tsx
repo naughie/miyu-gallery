@@ -23,7 +23,7 @@ const App = () => {
       <main className="flex-grow">
         <h2 className="text-2xl md:text-3xl text-center text-dark-pink font-bold mb-6 mt-6">
           <a
-            href="https://miyu-slideshow.vercel.app/"
+            href="https://miyu-slideshow.naughie.com/"
             className="flex justify-center items-baseline gap-2"
           >
             - <span>Slideshow</span>
