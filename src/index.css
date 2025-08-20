@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
+
+@import "tailwindcss" source(none);
+@source "../index.html";
+@source "./**/*.tsx";
+
+@theme {
+  --font-yusei: "Yusei Magic";
+
+  --color-custom-pink: oklab(0.963 0.019 0.005);
+  --color-dark-pink: oklab(0.816 0.126 0.015);
+  --color-custom-white: oklab(1 0 0);
+}
