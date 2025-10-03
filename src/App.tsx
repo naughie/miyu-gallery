@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import { lazy, Suspense } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import PhotoGrid from "./components/PhotoGrid";
@@ -11,10 +12,33 @@ const getImages = async () => {
   };
 
   const resp = await fetch("https://miyu-images.naughie.com/index.json");
+  if (!resp.ok) {
+    throw new Error("Could not fetch the image profiles");
+  }
   const meta = (await resp.json()) as ImageMeta[];
   return meta;
 };
-const images = await getImages();
+
+const ImageList = lazy(async () => {
+  const images = await getImages();
+  return {
+    default: () => {
+      return (
+        <>
+          {images.map((song) => (
+            <PhotoGrid
+              key={song.dir}
+              songTitle={song.title}
+              imageUrls={song.files.map(
+                (file) => `https://miyu-images.naughie.com${file}`,
+              )}
+            />
+          ))}
+        </>
+      );
+    },
+  };
+});
 
 const App = () => {
   return (
@@ -30,15 +54,9 @@ const App = () => {
             <ExternalLink />-
           </a>
         </h2>
-        {images.map((song) => (
-          <PhotoGrid
-            key={song.dir}
-            songTitle={song.title}
-            imageUrls={song.files.map(
-              (file) => `https://miyu-images.naughie.com${file}`,
-            )}
-          />
-        ))}
+        <Suspense fallback={<div />}>
+          <ImageList />
+        </Suspense>
       </main>
       <Footer />
     </div>
